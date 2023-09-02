@@ -80,7 +80,7 @@ def main():
 
     if not submit:
         
-        st.caption('사이브바에서 학번과 코드를 입력하고 회차와 교시를 선택한 뒤 제출하세요!')
+        st.caption('사이드바에서 학번과 코드를 입력하고 회차와 교시를 선택한 뒤 제출하세요!')
 
     if submit:
         path1 = "data/name_list.csv"
@@ -114,19 +114,19 @@ def main():
                     trend_unique = question['과목'].unique()
                     
                     grouby_trend = question.groupby(['과목', '파트']).agg({'난이도': ['mean'], '파트': ['count']}).reset_index()
-                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 갯수']
+                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 개수']
 
                     # circle chart
-                    fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='문제 갯수',
-                                    color='문제 갯수',
+                    fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='문제 개수',
+                                    color='문제 개수',
                                     hover_data=['평균 난이도'],
                                     color_continuous_scale='RdBu',
-                                    color_continuous_midpoint=np.average(grouby_trend['문제 갯수']))
+                                    color_continuous_midpoint=np.average(grouby_trend['문제 개수']))
                     st.plotly_chart(fig, use_container_width=True)
 
                     # bar chart
-                    fig = px.bar(grouby_trend, x='과목', y='문제 갯수', color='파트')
-                    fig.update_layout(title='문제 갯수')
+                    fig = px.bar(grouby_trend, x='과목', y='문제 개수', color='파트')
+                    fig.update_layout(title='문제 개수')
                     st.plotly_chart(fig, use_container_width=True)
 
                     trend_tabs = st.tabs(list(trend_unique))
@@ -148,18 +148,18 @@ def main():
                     trend_unique = question['과목'].unique()
 
                     grouby_trend = question_incorrect.groupby(['과목', '파트']).agg({'난이도': ['mean'], '파트': ['count']}).reset_index()
-                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 갯수']
-                    fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='문제 갯수',
-                                    color='문제 갯수',
+                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 개수']
+                    fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='문제 개수',
+                                    color='문제 개수',
                                     hover_data=['평균 난이도'],
                                     color_continuous_scale='RdBu',
-                                    color_continuous_midpoint=np.average(grouby_trend['문제 갯수']))
+                                    color_continuous_midpoint=np.average(grouby_trend['문제 개수']))
                     
                     st.plotly_chart(fig, use_container_width=True)
 
                     # bar chart
-                    fig = px.bar(grouby_trend, x='과목', y='문제 갯수', color='파트')
-                    fig.update_layout(title='틀린 문제 갯수')
+                    fig = px.bar(grouby_trend, x='과목', y='문제 개수', color='파트')
+                    fig.update_layout(title='틀린 문제 개수')
                     st.plotly_chart(fig, use_container_width=True)
                     
 
@@ -189,10 +189,10 @@ def main():
                     tmp['난이도 구간'] = pd.cut(tmp['난이도'], bins=bins, labels=labels, right=False)
 
                     grouby_trend = question.groupby(['과목', '파트']).agg({'난이도': ['mean'], '파트': ['count']}).reset_index()
-                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 갯수']
+                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 개수']
                     fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='평균 난이도',
                                     color='평균 난이도',
-                                    hover_data=['문제 갯수'],
+                                    hover_data=['문제 개수'],
                                     color_continuous_scale='RdBu',
                                     color_continuous_midpoint=np.average(grouby_trend['평균 난이도']))
                     
@@ -225,7 +225,7 @@ def main():
                     tmp['난이도 구간'] = pd.cut(tmp['난이도'], bins=bins, labels=labels, right=False)
 
                     grouby_trend = question_incorrect.groupby(['과목', '파트']).agg({'난이도': ['mean'], '파트': ['count']}).reset_index()
-                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 갯수']
+                    grouby_trend.columns = ['과목', '파트', '평균 난이도', '문제 개수']
                     fig = px.sunburst(grouby_trend, path=['과목', '파트'], values='평균 난이도',
                                     color='평균 난이도',
                                     hover_data=['문제 갯수'],
